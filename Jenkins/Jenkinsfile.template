@@ -1,0 +1,61 @@
+pipeline {
+    agent { 
+        node {
+            label 'jenkins-agent-name-here'
+            }
+      }
+    triggers {
+        pollSCM '*/5 * * * *' //will poll repository every 5 minutes
+        //pollSCM '* * * * *' //will poll repository once a minutes
+    }
+    stages {
+        stage('PreBuild') {
+            steps {
+                echo "Configurations.."
+                sh '''
+                echo "doing config stuff.."
+                '''
+            }
+        }
+        stage('Build') {
+            steps {
+                echo "Building.."
+                sh '''
+                echo "doing build stuff.."
+                '''
+            }
+        }
+        stage('PostBuild') {
+            steps {
+                echo "Organizing.."
+                sh '''
+                echo "doing organization stuff.."
+                '''
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing.."
+                sh '''
+                echo "doing test stuff.."
+                '''
+            }
+        }
+        stage('OtherTest') {
+            steps {
+                echo "Other Testing.."
+                sh '''
+                echo "doing other test stuff.."
+                '''
+            }
+        }
+        stage('Deliver') {
+            steps {
+                echo 'Deliver....'
+                sh '''
+                echo "doing delivery stuff.."
+                '''
+            }
+        }
+    }
+}

@@ -1,0 +1,58 @@
+# workflow name
+name: workflow-02
+
+# event >> trigger
+#on: ["push"] # ["push", "pull_request"]
+on:
+  push:
+    branches: [master] # when someone push to master branch the workflow will run
+
+
+jobs:
+  # name
+  test-setup-env:
+    # OS or platform
+    runs-on: ubuntu-latest
+    # steps
+    steps:
+      - name: Pull git repository
+        uses: actions/checkout@v3
+      - name: Install Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Upgrade Pip
+        run: python -m pip install --upgrade pip
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+      - run: python3 ./scripts/hello.py
+
+  # name
+  test-independent:
+    runs-on: self-hosted
+    steps:
+      - name: Pull code from repo
+        uses: actions/checkout@v3
+      - name: Print hello world
+        run: python3 ./scripts/hello.py
+
+  # name
+  run_test:
+    # OS or platform
+    runs-on: ubuntu-latest
+    # Depends on Jobs
+    needs: [test-setup-env]
+    # steps
+    steps:
+      - name: Pull code from repo
+        uses: actions/checkout@v3
+      - name: Run PyTest
+        run: |
+          pip install pytest
+          pytest -v
+          pytest
+
+  
+
+
+    

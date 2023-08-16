@@ -1,0 +1,65 @@
+# workflow name
+name: workflow-01
+
+# event >> trigger
+#on: ["push"] # ["push", "pull_request"]
+on:
+  push:
+    branches: [master] # when someone push to master branch the workflow will run
+
+
+jobs:
+  # name
+  job-name:
+    # OS or platform
+    runs-on: ubuntu-latest
+    # steps
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - run: python3 ./scripts/hello.py
+
+  other-job-name:
+    # OS or platform
+    runs-on: ubuntu-latest
+    # steps
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - run: python3 ./scripts/hello.py
+
+  mac-os-job-name:
+    # OS or platform
+    runs-on: self-catalina10.15.7 # macos-11    # steps
+    steps:
+      #- uses: actions/setup-python@v4
+        #with:
+          #python-version: '3.10'
+
+      #- run: git clone https://github.com/fluendo/cerbero.git
+      - run: git clone https://gitlab.freedesktop.org/gstreamer/cerbero.git
+      - run: cd cerbero && git pull && git checkout 1.22.5 && git fetch
+      - run: openssl version -a
+      - run: openssl version -d
+      - run: brew reinstall openssl@3
+      - run: |
+          openssl version -a
+          openssl version -d
+      - name: "rustup init automatic prompt"
+        run:  printf "%sn" 1 | rustup-init 
+      - run: rustc --version
+      - working-directory: ./cerbero
+        run: |
+          openssl version -a
+          openssl version -d
+          which python3 
+          ls 
+          ls config
+          python3 cerbero-uninstalled bootstrap
+          python3 cerbero-uninstalled -c config/osx-x86-64.cbc package gstreamer-1.0 
