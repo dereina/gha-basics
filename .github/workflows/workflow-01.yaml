@@ -47,7 +47,7 @@ jobs:
       - run: cd cerbero && git pull && git checkout 1.22.5 && git fetch
       - run: openssl version -a
       - run: openssl version -d
-      - run: brew reinstall openssl@3
+      #- run: brew reinstall openssl@3
       - run: |
           openssl version -a
           openssl version -d
