@@ -44,6 +44,7 @@ jobs:
 
       #- run: git clone https://github.com/fluendo/cerbero.git
       - run: git clone https://gitlab.freedesktop.org/gstreamer/cerbero.git
+      - run: whoami 
       - run: cd cerbero && git pull && git checkout 1.22.5 && git fetch
       - run: openssl version -a
       - run: openssl version -d
