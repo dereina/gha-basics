@@ -7,7 +7,6 @@ on:
   push:
     branches: [master] # when someone push to master branch the workflow will run
 
-
 jobs:
   # name
   job-name:
